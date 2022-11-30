@@ -1,24 +1,56 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import AppBar from '../components/AppBar';
 import Button from '../components/Button';
 
-export default function LogInScreen() {
+export default function LogInScreen(props) {
+    const { navigation } = props;
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     return (
         <View style={styles.container}>
-            <AppBar />
             <View style={styles.inner}>
                 <Text style={styles.title}>Log In</Text>
 
-                <TextInput style={styles.input} value="Email Address" />
+                <TextInput
+                    style={styles.input}
+                    value={email}
+                    onChangeText={ (text) => { setEmail(text); } }
+                    autoCapitalize="none" //入力時にキーボード入力がShiftを押された状態ではなくする
+                    keyboardType='email-address' //入力時のキーボードの種類をメールアドレス用キーボードにする
+                    placeholder="Email Address" //placeholder
+                    textContentType='emailAddress' //端末保存のキーチェーンから自動補完される
+                />
 
-                <TextInput style={styles.input} value="Password" />
+                <TextInput
+                    style={styles.input}
+                    value={password}
+                    onChangeText={ (text) => { setPassword(text); }}
+                    autoCapitalize="none"
+                    placeholder="Password"
+                    secureTextEntry //secureTextEntry={true}と同じ意味 パスワード用に入力文字を「●●●」にする
+                    textContentType='Password'
+                />
 
-                <Button label="Submit" />
+                <Button
+                    label="Submit"
+                    onPress={() => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'MemoList'}],
+                        });
+                    }}/>
 
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not registered?</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'SignUp' }],
+                            });
+                        }}
+                    >
                         <Text style={styles.footerLink}>Sign up here!</Text>
                     </TouchableOpacity>
                 </View>
