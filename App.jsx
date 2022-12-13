@@ -7,8 +7,18 @@ import MemoDetailScreen from './src/screens/MemoDetailScreen';
 import MemoEditScreen from './src/screens/MemoEditScreen';
 import MemoListScreen from './src/screens/MemoListScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
+import firebase from'firebase';
+
+import { firebaseConfig } from './env';
 
 const Stack = createStackNavigator();
+
+
+//firebase.apps.lengthで既に初期化されているアプリの数を取得できる
+//つまり0、何も初期化されてなかったら初期化をはじめてくださいということになる。
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig) //firebaseConfigで firebaseを初期化
+}
 
 export default function App() {
   return (
